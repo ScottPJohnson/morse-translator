@@ -43,8 +43,8 @@ translation={
 
 #Button Values & Totals
 
-counterA = 'Do'
-counterB = 'Da'
+buttonA = 'Do'
+buttonB = 'Da'
 runningTotal = ''
 
 #Core Code
@@ -55,14 +55,14 @@ while True:
 #which indicates that you want to add 'Do' to the runningTotal
 
     if button_a.is_pressed():
-        runningTotal = runningTotal + counterA
+        runningTotal = runningTotal + buttonA
         sleep(200)
 
 #This code will recognise that you have pressed the B button on the micro:bit, 
 #which indicates that you want to add 'Da' to the runningTotal
 
     elif button_b.is_pressed():
-        runningTotal = runningTotal + counterB
+        runningTotal = runningTotal + buttonB
         sleep(200)
 
 #This code will recognise that you have shaken the micro:bit, which indicates that you want to 
