@@ -49,6 +49,8 @@ runningTotal = ''
 
 # Core Code
 
+# The below code opens a file for storing the translated digits
+
 with open('morse_translations.txt', 'w') as file:
     file.write('Start of Morse Code translations\n')
     
@@ -75,19 +77,22 @@ with open('morse_translations.txt', 'w') as file:
 # screen. If an invalid combination of DOs and DAs is entered it will display a
 # sad face on the Micro:bit screen. In both cases it will reset the
 # 'runningTotal'
+#CHANGE 18Nov18: The translated digit will now also be written to a file
 
         elif accelerometer.was_gesture("shake"):
             if runningTotal != '':
                 if runningTotal in translation:
                     file.write(translation.get(runningTotal))
                     display.show(translation.get(runningTotal))
-                    sleep(2000)
+                    sleep(1000)
                     runningTotal=''
                 else:
-                    break
+                    display.show(Image.SAD)
+                    sleep(1000)
+                    runningTotal=''
             else:
                 display.show(Image.SAD)
-                sleep(2000)
+                sleep(1000)
                 runningTotal=''
 
 # This code will recognise that you have touched pin0 & pinGND on the micro:bit, 
@@ -99,7 +104,6 @@ with open('morse_translations.txt', 'w') as file:
 #            sleep(500)
 #            display.clear()
             break
-
 
 # If none of the above are happening... This code will ensure the 
 # display remains blank
