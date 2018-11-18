@@ -80,16 +80,11 @@ with open('morse_translations.txt', 'w') as file:
 #CHANGE 18Nov18: The translated digit will now also be written to a file
 
         elif accelerometer.was_gesture("shake"):
-            if runningTotal != '':
-                if runningTotal in translation:
-                    file.write(translation.get(runningTotal))
-                    display.show(translation.get(runningTotal))
-                    sleep(1000)
-                    runningTotal=''
-                else:
-                    display.show(Image.SAD)
-                    sleep(1000)
-                    runningTotal=''
+            if runningTotal in translation:
+                file.write(translation.get(runningTotal))
+                display.show(translation.get(runningTotal))
+                sleep(1000)
+                runningTotal=''
             else:
                 display.show(Image.SAD)
                 sleep(1000)
