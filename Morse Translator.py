@@ -1,3 +1,11 @@
+# Date: 19th November 2018
+# Author: Scott Johnson
+# Title: Morse Code Traslator for Micro:bit
+
+# I guess the title speaks for itself.  I have written this code to remain within a loop
+# meaning it should always work...  I have also written it such that no 'line errors' should
+# be possible from any user actions... If you can generate one let me know  :-)
+
 from microbit import *
 
 # Dictionary containing Morse Code letter & number translations
@@ -46,30 +54,40 @@ translation = {
 buttonA = 'Do'
 buttonB = 'Da'
 runningTotal = ''
+content = ''
 
 # Core Code
 
-# The below code opens a file for storing the translated digits
+# This code opens a file for storing the translated digits
 
 with open('morse_translations.txt', 'w') as file:
-    file.write('Start of Morse Code translations\n')
     
     while True:
 
 # This code will recognise that you have pressed the A button on
 # the micro:bit, which indicates that you want to add 'Do' to the 
-# runningTotal
+# runningTotal, which it will do as long as there is no live session
+# 'content'
 
         if button_a.is_pressed():
-            runningTotal = runningTotal + buttonA
-            sleep(200)
+            if content == '':
+                runningTotal = runningTotal + buttonA
+                sleep(200)
+            else:
+                display.show(Image.SAD)
+                sleep(1000)
 
 # This code will recognise that you have pressed the B button on the micro:bit, 
-# which indicates that you want to add 'Da' to the runningTotal
+# which indicates that you want to add 'Da' to the runningTotal, which it will 
+# do as long as there is no live session 'content'
 
         elif button_b.is_pressed():
-            runningTotal = runningTotal + buttonB
-            sleep(200)
+            if content == '':
+                runningTotal = runningTotal + buttonB
+                sleep(200)
+            else:
+                display.show(Image.SAD)
+                sleep(1000)
 
 # This code will recognise that you have shaken the micro:bit, which indicates
 # that you want to translate (via the translation Dictionary) the DOs and DAs 
@@ -91,21 +109,34 @@ with open('morse_translations.txt', 'w') as file:
                 runningTotal=''
 
 # This code will recognise that you have touched pin0 & pinGND on the micro:bit, 
-# which indiactes that you have made a mistake and want to reset
-# It will reset the 'runningTotal', and also display a tick in the LEDs as a visual confirmation
+# which indiactes that you want to display the transalted morse code characters that have 
+# been saved to file in this session, to the screen of the micro:bit. It will only do this
+# if there is content, otherwise it will just display a sad face and reopen the file
 
         elif pin0.is_touched():
-#            display.show(Image.HAPPY)
-#            sleep(500)
-#            display.clear()
-            break
+            file.close()
+            with open('morse_translations.txt') as file:
+                content = file.read()
+            if content != '':
+                display.show(content)
+                sleep(1000)
+            else:
+                file = open('morse_translations.txt', 'w')
+                display.show(Image.SAD)
+                sleep(1000)
+
+# This code will recognise that you have touched pin2 & pinGND on the micro:bit, which will overwrite 
+# the current session file, allowing the user to start over with a fresh session file
+
+        elif pin2.is_touched():
+            file.close()
+            file = open('morse_translations.txt', 'w')
+            content = ''
+            display.show(Image.YES)
+            sleep(1000)
 
 # If none of the above are happening... This code will ensure the 
 # display remains blank
 
         else:
             display.clear()
-            
-with open('morse_translations.txt')as file:
-    content = file.read()
-print(content)
