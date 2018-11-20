@@ -1,4 +1,4 @@
-# Date: 19th November 2018
+# Date: 18th November 2018
 # Author: Scott Johnson
 # Title: Morse Code Traslator for Micro:bit
 
@@ -52,7 +52,9 @@ translation = {
 # Button Values & Totals
 
 buttonA = 'Do'
+dot = Image('00000:00000:00900:00000:00000')
 buttonB = 'Da'
+dash = Image('00000:00000:09990:00000:00000')
 runningTotal = ''
 content = ''
 
@@ -68,10 +70,12 @@ with open('morse_translations.txt', 'w') as file:
 # the micro:bit, which indicates that you want to add 'Do' to the 
 # runningTotal, which it will do as long as there is no live session
 # 'content'
+# CHANGE 20Nov18: When the button is pressed an image representing a dot will be displayed
 
         if button_a.is_pressed():
             if content == '':
                 runningTotal = runningTotal + buttonA
+                display.show(dot)
                 sleep(200)
             else:
                 display.show(Image.SAD)
@@ -80,10 +84,12 @@ with open('morse_translations.txt', 'w') as file:
 # This code will recognise that you have pressed the B button on the micro:bit, 
 # which indicates that you want to add 'Da' to the runningTotal, which it will 
 # do as long as there is no live session 'content'
+# CHANGE 20Nov18: When the button is pressed an image representing a dash will be displayed
 
         elif button_b.is_pressed():
             if content == '':
                 runningTotal = runningTotal + buttonB
+                display.show(dash)
                 sleep(200)
             else:
                 display.show(Image.SAD)
@@ -95,7 +101,7 @@ with open('morse_translations.txt', 'w') as file:
 # screen. If an invalid combination of DOs and DAs is entered it will display a
 # sad face on the Micro:bit screen. In both cases it will reset the
 # 'runningTotal'
-#CHANGE 18Nov18: The translated digit will now also be written to a file
+# CHANGE 18Nov18: The translated digit will now also be written to a file
 
         elif accelerometer.was_gesture("shake"):
             if runningTotal in translation:
