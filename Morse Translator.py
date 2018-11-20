@@ -1,4 +1,4 @@
-# Date: 18th November 2018
+# Date: 11th November 2018
 # Author: Scott Johnson
 # Title: Morse Code Traslator for Micro:bit
 
