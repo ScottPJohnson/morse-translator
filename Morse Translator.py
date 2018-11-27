@@ -199,13 +199,13 @@ def temp():
 #                sleep(500)
 #                display.clear()
 #                sleep(500)
-
-        elif accelerometer.was_gesture('face down'):
-            sleep(500)
-            return menu()
-
-        else:
-            display.clear()
+#
+#        elif accelerometer.was_gesture('face down'):
+#            sleep(500)
+#            return menu()
+#
+#        else:
+#            display.clear()
 
 
 def menu():
